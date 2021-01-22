@@ -147,27 +147,6 @@ resource "aws_security_group" "ecs_tasks" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-resource "aws_service_discovery_service" "default" {
-  count = 1
-  name  = var.service_name
-
-  dns_config {
-    namespace_id = var.host_zone_id
-
-    dns_records {
-      ttl  = 60
-      type = "A"
-    }
-
-    routing_policy = "MULTIVALUE"
-  }
-
-  health_check_custom_config {
-    failure_threshold = 1
-  }
-}
-
 data "aws_iam_role" "ecs_task_execution_role" {
   name = var.ecs_task_execution_role_name
 }
