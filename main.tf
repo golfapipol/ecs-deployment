@@ -82,7 +82,6 @@ data "aws_ecs_cluster" "ecs-mongo" {
 
 module "container" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.21.0"
-  command                      = var.command
   container_name               = var.container_name
   container_image              = var.app_image
   container_cpu                = var.fargate_cpu

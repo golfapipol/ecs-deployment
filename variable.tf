@@ -25,9 +25,6 @@ variable "cluster_name" {
 }
 
 #ECS
-variable "command" {
-
-}
 variable "service_name" {
 
 }
