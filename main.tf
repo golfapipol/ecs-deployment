@@ -48,7 +48,7 @@ resource "aws_alb_listener" "app_listener" {
 }
 
 resource "aws_security_group" "lb" {
-  name = "load-balancer-sg"
+  name = "load-balancer-sg-test"
 
   description = "controls access to the ALB"
   vpc_id      = var.vpc_id
@@ -148,17 +148,12 @@ resource "aws_security_group" "ecs_tasks" {
   }
 }
 
-resource "aws_service_discovery_private_dns_namespace" "default" {
-  name = "local"
-  vpc  = var.vpc_id
-}
-
 resource "aws_service_discovery_service" "default" {
   count = 1
   name  = var.service_name
 
   dns_config {
-    namespace_id = aws_service_discovery_private_dns_namespace.default.id
+    namespace_id = var.host_zone_id
 
     dns_records {
       ttl  = 60

@@ -49,3 +49,6 @@ variable "fargate_memory" {
 variable "app_port" {
 
 }
+variable "host_zone_id" {
+  
+}
