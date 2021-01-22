@@ -121,7 +121,7 @@ resource "aws_ecs_service" "main" {
   launch_type = "FARGATE"
 
   task_definition = aws_ecs_task_definition.default.arn
-  cluster         = aws_ecs_cluster.main.id
+  cluster         = data.aws_ecs_cluster.main.id
   name            = var.service_name
   desired_count   = 1
 
