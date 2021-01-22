@@ -104,10 +104,12 @@ module "container" {
     }
     secretOptions = null
   }
-  environment = [{
-    name  = k
-    value = v
-  }]
+  environment = [
+    # {
+    #     name  = k
+    #     value = v
+    # }
+  ]
   secrets = []
 }
 
