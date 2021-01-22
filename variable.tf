@@ -58,3 +58,13 @@ variable "subnet_id1" {
 variable "subnet_id2" {
   
 }
+variable "private_subnet_id1" {
+  
+}
+variable "private_subnet_id2" {
+  
+}
+
+variable "task_definition" {
+  default = "rollingupdate-task-definition"
+}

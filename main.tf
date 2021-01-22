@@ -72,7 +72,7 @@ resource "aws_security_group" "lb" {
 }
 
 // ECS
-data "aws_ecs_cluster" "ecs-mongo" {
+data "aws_ecs_cluster" "main" {
   cluster_name = var.cluster_name
 }
 
@@ -107,6 +107,43 @@ module "container" {
   ]
   secrets = []
 }
+resource "aws_ecs_task_definition" "default" {
+  family                   = var.task_definition
+  container_definitions    = module.container.json
+  execution_role_arn       = data.aws_iam_role.ecs_task_execution_role.arn
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = var.fargate_cpu
+  memory                   = var.fargate_memory
+}
+
+resource "aws_ecs_service" "main" {
+  launch_type = "FARGATE"
+
+  task_definition = aws_ecs_task_definition.default.arn
+  cluster         = aws_ecs_cluster.main.id
+  name            = var.service_name
+  desired_count   = 1
+
+  network_configuration {
+    security_groups  = [aws_security_group.ecs_tasks.id]
+    subnets          = [var.private_subnet_id1, var.private_subnet_id2]
+    assign_public_ip = true
+  }
+
+  load_balancer {
+    target_group_arn = aws_alb_target_group.default.id
+    container_name   = var.container_name
+    container_port   = var.app_port
+  }
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.default.0.arn
+  }
+
+  depends_on = [var.aws_alb_listener]
+}
+
 
 resource "aws_cloudwatch_log_group" "default" {
   name = "/ecs/${var.container_name}"
