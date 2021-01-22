@@ -23,9 +23,6 @@ variable "aws_alb_target_group" {
 variable "cluster_name" {
 
 }
-variable "lb_group_id" {
-
-}
 
 #ECS
 variable "command" {
