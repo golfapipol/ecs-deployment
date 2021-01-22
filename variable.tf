@@ -35,7 +35,7 @@ variable "container_name" {
 
 }
 variable "ecs_task_execution_role_name" {
-
+  default = "ECSTaskExecutionRole"
 }
 variable "ecs_task_sg" {
 
