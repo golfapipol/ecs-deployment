@@ -52,3 +52,9 @@ variable "app_port" {
 variable "host_zone_id" {
   
 }
+variable "subnet_id1" {
+  
+}
+variable "subnet_id2" {
+  
+}

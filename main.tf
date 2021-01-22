@@ -5,13 +5,9 @@ provider "aws" {
 }
 
 # ALB
-data "aws_subnet_ids" "public" {
-  vpc_id = var.vpc_id
-}
-
 resource "aws_alb" "main" {
   name            = var.aws_alb_name
-  subnets         = data.aws_subnet_ids.public.ids
+  subnets         = [var.subnet_id1,var.subnet_id2]
   security_groups = [aws_security_group.lb.id]
 }
 
