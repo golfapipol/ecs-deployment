@@ -144,6 +144,25 @@ resource "aws_ecs_service" "main" {
   depends_on = [var.aws_alb_listener]
 }
 
+resource "aws_service_discovery_service" "default" {
+  count = 1
+  name  = var.service_name
+
+  dns_config {
+    dns_records {
+      ttl  = 60
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
+
 
 resource "aws_cloudwatch_log_group" "default" {
   name = "/ecs/${var.container_name}"
