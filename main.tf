@@ -144,11 +144,19 @@ resource "aws_ecs_service" "main" {
   depends_on = [var.aws_alb_listener]
 }
 
+
+resource "aws_service_discovery_private_dns_namespace" "default" {
+  name        = "test"
+  vpc         = var.vpc_id
+}
+
 resource "aws_service_discovery_service" "default" {
   count = 1
   name  = var.service_name
 
   dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.default.id
+    
     dns_records {
       ttl  = 60
       type = "A"
