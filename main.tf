@@ -141,7 +141,7 @@ resource "aws_ecs_service" "main" {
     registry_arn = aws_service_discovery_service.default.0.arn
   }
 
-  depends_on = [var.aws_alb_listener]
+  depends_on = [aws_alb_listener.app_listener]
 }
 
 
