@@ -51,7 +51,7 @@ resource "aws_security_group" "lb" {
   name = "load-balancer-sg"
 
   description = "controls access to the ALB"
-  vpc_id      = var.aws_vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     protocol    = "tcp"
@@ -122,7 +122,7 @@ resource "aws_cloudwatch_log_group" "default" {
 resource "aws_security_group" "ecs_tasks" {
   name        = var.ecs_task_sg
   description = "allow inbound access from the ALB only"
-  vpc_id      = var.aws_vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     protocol        = "tcp"
@@ -149,7 +149,7 @@ resource "aws_security_group" "ecs_tasks" {
 
 resource "aws_service_discovery_private_dns_namespace" "default" {
   name = "local"
-  vpc  = var.aws_vpc_id
+  vpc  = var.vpc_id
 }
 
 resource "aws_service_discovery_service" "default" {

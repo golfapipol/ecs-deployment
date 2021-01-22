@@ -40,9 +40,6 @@ variable "ecs_task_execution_role_name" {
 variable "ecs_task_sg" {
 
 }
-variable "aws_vpc_id" {
-
-}
 variable "app_image" {
 
 }
